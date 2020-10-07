@@ -1,0 +1,85 @@
+# Example YAML to get you started quickly.
+# Be aware that YAML has indentation based coping.
+# Code completion support is available so start typing for available options.
+swagger: '2.0'
+
+# This is your document metadata
+info:
+  version: "0.0.1"
+  title: Orders API
+  description: |
+    Creating and updating or orders for Request Management.
+
+host:
+  amer-mint-partner06-dev.apigee.net
+
+schemes:
+  - https
+
+# Describe your paths here
+paths:
+  # This is a path endpoint. Change it.
+  /v0/research/rm/orders:
+    # This is a HTTP operation
+    get:
+      # Describe this verb here. Note: you can use markdown
+      description: |
+        Gets all `Order` objects that user has access to.
+
+        Optional filtering and sorting available
+      # This is array of GET operation parameters:
+      parameters:
+        # An example parameter that is in query and is required
+        - name: pageSize
+          in: query
+          description: Number of orders to return.
+          required: false
+          type: number
+          default: 100
+        - name: pageNo
+          in: query
+          description: Pagination number
+          required: false
+          type: number
+          default: 1
+        - name: filter
+          in: query
+          description: Stringified JSON of filter values. Can have multiple filters
+          type: string
+        - name: sortProperty
+          in: query
+          type: string
+          description: Property to sort by → e.g. /order/id
+        - name: sortDirection
+          in: query
+          description: Sort direction
+          type: string
+          enum:
+            - ASC
+            - DESC
+          default: ASC
+      # Expected responses for this operation:
+      responses:
+        # Response code
+        200:
+          description: Successful response
+          # A schema describing your response object.
+          # Use JSON Schema format
+          schema:
+            title: FilteredResult
+            type: object
+            properties:
+              pageNo:
+                type: number
+                example: 1
+              pageSize:
+                type: number
+                example: 10
+              totalResultSize:
+                type: number
+                example: 100
+              orders:
+                type: array
+                items:
+                  title: order
+                  type: object
